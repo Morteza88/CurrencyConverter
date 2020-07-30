@@ -15,7 +15,7 @@ namespace CurrencyConverterlibrary.NUnitTests
             rates.Add(Tuple.Create("USD", "CAD", 1.34));
             rates.Add(Tuple.Create("CAD", "GBP", 0.58));
             rates.Add(Tuple.Create("USD", "EUR", 0.86));
-            CurrencyConverter currencyConverter = new CurrencyConverter();
+            CurrencyConverter currencyConverter = CurrencyConverter.GetInstance();
             currencyConverter.UpdateConfiguration(rates);
 
             double result = currencyConverter.Convert("CAD", "EUR", 1);
@@ -37,7 +37,7 @@ namespace CurrencyConverterlibrary.NUnitTests
             rates.Add(Tuple.Create("e", "h", 0.65));
             rates.Add(Tuple.Create("f", "g", 1.25));
             rates.Add(Tuple.Create("g", "h", 0.92));
-            CurrencyConverter currencyConverter = new CurrencyConverter();
+            CurrencyConverter currencyConverter = CurrencyConverter.GetInstance();
             currencyConverter.UpdateConfiguration(rates);
 
             double amount = 100;
