@@ -7,8 +7,10 @@ namespace CurrencyConverterLibrary.Utils
     public class Graph<T>
     {
         public Dictionary<T, HashSet<T>> NeighborNodesList { get; }
-        public Graph(IEnumerable<T> nodes, IEnumerable<Tuple<T, T>> edges)
+        public HashSet<T> Nodes { get; }
+        public Graph(HashSet<T> nodes, IEnumerable<Tuple<T, T>> edges)
         {
+            Nodes = nodes;
             NeighborNodesList = new Dictionary<T, HashSet<T>>();
             foreach (var node in nodes)
                 NeighborNodesList.Add(node, new HashSet<T>());
@@ -29,8 +31,20 @@ namespace CurrencyConverterLibrary.Utils
             }
             return new Graph<T>(nodes, edges);
         }
+        public static Graph<T> CreateGraph(IEnumerable<Tuple<T, T,double>> rates)
+        {
+            HashSet<T> nodes = new HashSet<T>();
+            List<Tuple<T, T>> edges = new List<Tuple<T, T>>();
+            foreach (var rate in rates)
+            {
+                nodes.Add(rate.Item1);
+                nodes.Add(rate.Item2);
+                edges.Add(Tuple.Create(rate.Item1, rate.Item2));
+            }
+            return new Graph<T>(nodes, edges);
+        }
 
-        public Func<T, IEnumerable<T>> GetShortestPathFunction(T startNode)
+        public Func<T, List<T>> GetShortestPathFunction(T startNode)
         {
             var previousNodes = new Dictionary<T, T>();
             var queue = new Queue<T>();
@@ -48,7 +62,7 @@ namespace CurrencyConverterLibrary.Utils
                 }
             }
 
-            Func<T, IEnumerable<T>> shortestPath = (endNode) => {
+            Func<T, List<T>> shortestPath = (endNode) => {
                 var path = new List<T> { };
                 var current = endNode;
                 while (!current.Equals(startNode))
