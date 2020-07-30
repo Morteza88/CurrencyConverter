@@ -15,20 +15,17 @@ namespace CurrencyConverterLibrary
         List<Tuple<string, string, double>> ConversionRates = new List<Tuple<string, string, double>>();
 
         private CurrencyConverter() { }
-        public static CurrencyConverter GetInstance
+        public static CurrencyConverter GetInstance()
         {
-            get
+            if (instance == null)
             {
-                if (instance == null)
+                lock (lockObject)
                 {
-                    lock (lockObject)
-                    {
-                        if (instance == null)
-                            instance = new CurrencyConverter();
-                    }
+                    if (instance == null)
+                        instance = new CurrencyConverter();
                 }
-                return instance;
             }
+            return instance;
         }
 
         public void ClearConfiguration()
