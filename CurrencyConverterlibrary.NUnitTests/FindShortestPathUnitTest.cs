@@ -9,27 +9,6 @@ namespace CurrencyConverterlibrary.NUnitTests
 {
     public class FindShortestPathUnitTest
     {
-        [SetUp]
-        public void Setup()
-        {
-
-        }
-
-        [Test]
-        public void Test1()
-        {
-            List<Tuple<string, string, double>> rates = new List<Tuple<string, string, double>>();
-            rates.Add(Tuple.Create("USD", "CAD", 1.34));
-            rates.Add(Tuple.Create("CAD", "GBP", 0.58));
-            rates.Add(Tuple.Create("USD", "EUR", 0.86));
-            CurrencyConverter currencyConverter = new CurrencyConverter();
-            currencyConverter.UpdateConfiguration(rates);
-
-            double result = currencyConverter.Convert("CAD", "EUR", 1);
-            Assert.AreEqual(0.86 / 1.34, result);
-        }
-
-
         [Test]
         public void GetShortestPathFunction_ConnectedGraph_ReturnShortestPath()
         {
@@ -57,10 +36,9 @@ namespace CurrencyConverterlibrary.NUnitTests
             Assert.AreEqual(new List<string> { "a", "d" }, shortestPathFunc("d"));
             Assert.AreEqual(new List<string> { "a", "d", "e" }, shortestPathFunc("e"));
             Assert.AreEqual(new List<string> { "a", "d", "e", "f" }, shortestPathFunc("f"));
-            Assert.That(shortestPathFunc("g"), Is.EqualTo(new List<string> { "a", "d", "e", "g" }) | Is.EqualTo(new List<string> { "a", "r", "h", "g" }));
+            Assert.That(shortestPathFunc("g"), Is.EqualTo(new List<string> { "a", "d", "e", "g" }) | Is.EqualTo(new List<string> { "a", "d", "h", "g" }));
             Assert.AreEqual(new List<string> { "a", "d", "h" }, shortestPathFunc("h"));
         }
-
 
         [Test]
         public void GetShortestPathFunction_UnconnectedGraph_ReturnShortestPath()
