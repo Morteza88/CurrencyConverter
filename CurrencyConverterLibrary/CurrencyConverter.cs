@@ -11,8 +11,8 @@ namespace CurrencyConverterLibrary
         private static readonly object lockObject = new object();
         private static CurrencyConverter instance = null;
 
-        private Dictionary<string, Dictionary<string, double>> ConversionRateDictionaris = new Dictionary<string, Dictionary<string, double>>();
-        private List<Tuple<string, string, double>> ConversionRates = new List<Tuple<string, string, double>>();
+        private Dictionary<string, Dictionary<string, double>> conversionRateDictionaris = new Dictionary<string, Dictionary<string, double>>();
+        private List<Tuple<string, string, double>> conversionRates = new List<Tuple<string, string, double>>();
 
         private CurrencyConverter() { }
         public static CurrencyConverter GetInstance()
@@ -30,31 +30,31 @@ namespace CurrencyConverterLibrary
 
         public void ClearConfiguration()
         {
-            lock (ConversionRateDictionaris)
+            lock (conversionRateDictionaris)
             {
-                ConversionRates.Clear();
-                ConversionRateDictionaris.Clear();
+                conversionRates.Clear();
+                conversionRateDictionaris.Clear();
             }
         }
 
         public double Convert(string fromCurrency, string toCurrency, double amount)
         {
-            if (!ConversionRateDictionaris[fromCurrency].ContainsKey(toCurrency))
+            if (!conversionRateDictionaris[fromCurrency].ContainsKey(toCurrency))
                 return 0;
-            return amount * ConversionRateDictionaris[fromCurrency][toCurrency];
+            return amount * conversionRateDictionaris[fromCurrency][toCurrency];
         }
 
         public void UpdateConfiguration(IEnumerable<Tuple<string, string, double>> conversionRates)
         {
-            lock (ConversionRateDictionaris)
+            lock (conversionRateDictionaris)
             {
                 updateConversionRates(conversionRates);
-                ConversionRateDictionaris.Clear();
+                conversionRateDictionaris.Clear();
 
-                var currencyGraph = Graph<string>.CreateGraph(ConversionRates);
+                var currencyGraph = Graph<string>.CreateGraph(conversionRates);
                 foreach (var startNode in currencyGraph.Nodes)
                 {
-                    ConversionRateDictionaris.Add(startNode, new Dictionary<string, double>());
+                    conversionRateDictionaris.Add(startNode, new Dictionary<string, double>());
                     var shortestPathFunc = currencyGraph.GetShortestPathFunction(startNode);
                     foreach (var endNode in currencyGraph.Nodes)
                     {
@@ -68,7 +68,7 @@ namespace CurrencyConverterLibrary
                             {
                                 rate *= getRate(shortestPath[i], shortestPath[i + 1]);
                             }
-                            ConversionRateDictionaris[startNode].Add(endNode, rate);
+                            conversionRateDictionaris[startNode].Add(endNode, rate);
                         }
                     }
                 }
@@ -79,17 +79,17 @@ namespace CurrencyConverterLibrary
         {
             foreach (var item in conversionRates)
             {
-                ConversionRates.RemoveAll(x => (x.Item1 == item.Item1 && x.Item2 == item.Item2)
+                this.conversionRates.RemoveAll(x => (x.Item1 == item.Item1 && x.Item2 == item.Item2)
                                             || (x.Item1 == item.Item2 && x.Item2 == item.Item1));
-                ConversionRates.Add(item);
+                this.conversionRates.Add(item);
             }
         }
 
         private double getRate(string currencyFrom, string currencyTo)
         {
-            double? result = ConversionRates.Find(x => x.Item1 == currencyFrom && x.Item2 == currencyTo)?.Item3;
+            double? result = conversionRates.Find(x => x.Item1 == currencyFrom && x.Item2 == currencyTo)?.Item3;
             if (result == null)
-                result = 1 / ConversionRates.Find(x => x.Item1 == currencyTo && x.Item2 == currencyFrom).Item3;
+                result = 1 / conversionRates.Find(x => x.Item1 == currencyTo && x.Item2 == currencyFrom).Item3;
             return (double)result;
         }
     }

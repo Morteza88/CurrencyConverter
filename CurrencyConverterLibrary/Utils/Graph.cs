@@ -6,19 +6,19 @@ namespace CurrencyConverterLibrary.Utils
 {
     public class Graph<T>
     {
-        private Dictionary<T, HashSet<T>> NeighborNodesList { get; }
+        private Dictionary<T, HashSet<T>> neighborNodesList { get; }
         public HashSet<T> Nodes { get; }
         public Graph(HashSet<T> nodes, IEnumerable<Edge<T>> edges)
         {
             Nodes = nodes;
-            NeighborNodesList = new Dictionary<T, HashSet<T>>();
+            neighborNodesList = new Dictionary<T, HashSet<T>>();
             foreach (var node in nodes)
-                NeighborNodesList.Add(node, new HashSet<T>());
+                neighborNodesList.Add(node, new HashSet<T>());
 
             foreach (var edge in edges)
             {
-                NeighborNodesList[edge.NodeA].Add(edge.NodeB);
-                NeighborNodesList[edge.NodeB].Add(edge.NodeA);
+                neighborNodesList[edge.NodeA].Add(edge.NodeB);
+                neighborNodesList[edge.NodeB].Add(edge.NodeA);
             }
         }
         public static Graph<T> CreateGraph(IEnumerable<Edge<T>> edges)
@@ -53,7 +53,7 @@ namespace CurrencyConverterLibrary.Utils
             while (queue.Count > 0)
             {
                 var currentNode = queue.Dequeue();
-                foreach (var neighbor in NeighborNodesList[currentNode])
+                foreach (var neighbor in neighborNodesList[currentNode])
                 {
                     if (previousNodes.ContainsKey(neighbor))
                         continue;
