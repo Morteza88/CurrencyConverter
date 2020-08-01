@@ -6,7 +6,7 @@ namespace CurrencyConverterLibrary.Utils
 {
     public class Graph<T>
     {
-        public Dictionary<T, HashSet<T>> NeighborNodesList { get; }
+        private Dictionary<T, HashSet<T>> NeighborNodesList { get; }
         public HashSet<T> Nodes { get; }
         public Graph(HashSet<T> nodes, IEnumerable<Tuple<T, T>> edges)
         {
