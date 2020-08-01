@@ -11,8 +11,8 @@ namespace CurrencyConverterLibrary
         private static readonly object lockObject = new object();
         private static CurrencyConverter instance = null;
 
-        Dictionary<string, Dictionary<string, double>> ConversionRateDictionaris = new Dictionary<string, Dictionary<string, double>>();
-        List<Tuple<string, string, double>> ConversionRates = new List<Tuple<string, string, double>>();
+        private Dictionary<string, Dictionary<string, double>> ConversionRateDictionaris = new Dictionary<string, Dictionary<string, double>>();
+        private List<Tuple<string, string, double>> ConversionRates = new List<Tuple<string, string, double>>();
 
         private CurrencyConverter() { }
         public static CurrencyConverter GetInstance()
