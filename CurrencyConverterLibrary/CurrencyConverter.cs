@@ -8,7 +8,7 @@ namespace CurrencyConverterLibrary
 {
     public class CurrencyConverter : ICurrencyConverter
     {
-        private static object lockObject = new object();
+        private static readonly object lockObject = new object();
         private static CurrencyConverter instance = null;
 
         Dictionary<string, Dictionary<string, double>> ConversionRateDictionaris = new Dictionary<string, Dictionary<string, double>>();
