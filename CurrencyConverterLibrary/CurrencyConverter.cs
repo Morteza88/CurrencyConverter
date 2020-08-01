@@ -40,7 +40,7 @@ namespace CurrencyConverterLibrary
         public double Convert(string fromCurrency, string toCurrency, double amount)
         {
             if (!conversionRateDictionaris[fromCurrency].ContainsKey(toCurrency))
-                return 0;
+                throw new KeyNotFoundException("there is no way to convert " + fromCurrency + " to " + toCurrency);
             return amount * conversionRateDictionaris[fromCurrency][toCurrency];
         }
 
