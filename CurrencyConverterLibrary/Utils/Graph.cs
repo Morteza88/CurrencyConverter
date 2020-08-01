@@ -8,7 +8,7 @@ namespace CurrencyConverterLibrary.Utils
     {
         private Dictionary<T, HashSet<T>> NeighborNodesList { get; }
         public HashSet<T> Nodes { get; }
-        public Graph(HashSet<T> nodes, IEnumerable<Tuple<T, T>> edges)
+        public Graph(HashSet<T> nodes, IEnumerable<Edge<T>> edges)
         {
             Nodes = nodes;
             NeighborNodesList = new Dictionary<T, HashSet<T>>();
@@ -17,29 +17,29 @@ namespace CurrencyConverterLibrary.Utils
 
             foreach (var edge in edges)
             {
-                NeighborNodesList[edge.Item1].Add(edge.Item2);
-                NeighborNodesList[edge.Item2].Add(edge.Item1);
+                NeighborNodesList[edge.NodeA].Add(edge.NodeB);
+                NeighborNodesList[edge.NodeB].Add(edge.NodeA);
             }
         }
-        public static Graph<T> CreateGraph(IEnumerable<Tuple<T, T>> edges)
+        public static Graph<T> CreateGraph(IEnumerable<Edge<T>> edges)
         {
             HashSet<T> nodes = new HashSet<T>();
             foreach (var edge in edges)
             {
-                nodes.Add(edge.Item1);
-                nodes.Add(edge.Item2);
+                nodes.Add(edge.NodeA);
+                nodes.Add(edge.NodeB);
             }
             return new Graph<T>(nodes, edges);
         }
         public static Graph<T> CreateGraph(IEnumerable<Tuple<T, T,double>> rates)
         {
             HashSet<T> nodes = new HashSet<T>();
-            List<Tuple<T, T>> edges = new List<Tuple<T, T>>();
+            List<Edge<T>> edges = new List<Edge<T>>();
             foreach (var rate in rates)
             {
                 nodes.Add(rate.Item1);
                 nodes.Add(rate.Item2);
-                edges.Add(Tuple.Create(rate.Item1, rate.Item2));
+                edges.Add(new Edge<T>(rate.Item1, rate.Item2));
             }
             return new Graph<T>(nodes, edges);
         }
@@ -78,6 +78,17 @@ namespace CurrencyConverterLibrary.Utils
             };
 
             return shortestPath;
+        }
+    }
+
+    public struct Edge<T>
+    {
+        public T NodeA;
+        public T NodeB;
+        public Edge(T nodeA, T nodeB)
+        {
+            NodeA = nodeA;
+            NodeB = nodeB;
         }
     }
 }

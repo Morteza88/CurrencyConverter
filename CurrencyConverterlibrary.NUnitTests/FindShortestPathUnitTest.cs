@@ -13,17 +13,17 @@ namespace CurrencyConverterlibrary.NUnitTests
         public void GetShortestPathFunction_ConnectedGraph_ReturnShortestPath()
         {
             //Arrenge
-            List<Tuple<string, string>> edges = new List<Tuple<string, string>>();
-            edges.Add(Tuple.Create("a", "b"));
-            edges.Add(Tuple.Create("a", "d"));
-            edges.Add(Tuple.Create("b", "c"));
-            edges.Add(Tuple.Create("d", "e"));
-            edges.Add(Tuple.Create("d", "h"));
-            edges.Add(Tuple.Create("e", "f"));
-            edges.Add(Tuple.Create("e", "g"));
-            edges.Add(Tuple.Create("e", "h"));
-            edges.Add(Tuple.Create("f", "g"));
-            edges.Add(Tuple.Create("g", "h"));
+            List<Edge<string>> edges = new List<Edge<string>>();
+            edges.Add(new Edge<string>("a", "b"));
+            edges.Add(new Edge<string>("a", "d"));
+            edges.Add(new Edge<string>("b", "c"));
+            edges.Add(new Edge<string>("d", "e"));
+            edges.Add(new Edge<string>("d", "h"));
+            edges.Add(new Edge<string>("e", "f"));
+            edges.Add(new Edge<string>("e", "g"));
+            edges.Add(new Edge<string>("e", "h"));
+            edges.Add(new Edge<string>("f", "g"));
+            edges.Add(new Edge<string>("g", "h"));
             Graph<string> graph = Graph<string>.CreateGraph(edges);
 
             //Action
@@ -44,16 +44,16 @@ namespace CurrencyConverterlibrary.NUnitTests
         public void GetShortestPathFunction_UnconnectedGraph_ReturnShortestPath()
         {
             //Arrenge
-            List<Tuple<string, string>> edges = new List<Tuple<string, string>>();
-            edges.Add(Tuple.Create("a", "b"));
-            edges.Add(Tuple.Create("a", "d"));
-            edges.Add(Tuple.Create("b", "c"));
-            edges.Add(Tuple.Create("c", "d"));
-            edges.Add(Tuple.Create("e", "f"));
-            edges.Add(Tuple.Create("e", "g"));
-            edges.Add(Tuple.Create("e", "h"));
-            edges.Add(Tuple.Create("f", "g"));
-            edges.Add(Tuple.Create("g", "h"));
+            List<Edge<string>> edges = new List<Edge<string>>();
+            edges.Add(new Edge<string>("a", "b"));
+            edges.Add(new Edge<string>("a", "d"));
+            edges.Add(new Edge<string>("b", "c"));
+            edges.Add(new Edge<string>("c", "d"));
+            edges.Add(new Edge<string>("e", "f"));
+            edges.Add(new Edge<string>("e", "g"));
+            edges.Add(new Edge<string>("e", "h"));
+            edges.Add(new Edge<string>("f", "g"));
+            edges.Add(new Edge<string>("g", "h"));
             Graph<string> graph = Graph<string>.CreateGraph(edges);
 
             //Action
