@@ -44,7 +44,6 @@ namespace CurrencyConverterlibrary.NUnitTests
             double delta = 0.0001;
 
             //Action
-            var ConvertaToa = currencyConverter.Convert("a", "a", amount);
             var ConvertaTob = currencyConverter.Convert("a", "b", amount);
             var ConvertbToa = currencyConverter.Convert("b", "a", amount);
             var ConvertaToc = currencyConverter.Convert("a", "c", amount);
@@ -61,7 +60,6 @@ namespace CurrencyConverterlibrary.NUnitTests
             var ConverthToa = currencyConverter.Convert("h", "a", amount);
 
             //Assert
-            //Assert.AreEqual(1, ConvertaToa);
             Assert.AreEqual(amount * 1.32, ConvertaTob, delta);
             Assert.AreEqual(amount / 1.32, ConvertbToa, delta);
             Assert.AreEqual(amount * (1.32 * 1.46), ConvertaToc, delta);
